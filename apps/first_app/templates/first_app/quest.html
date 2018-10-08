@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load static %}
+  <meta charset="UTF-8">
+	<title>Fight</title>
+  <link rel="stylesheet" href="../../static/first_app/styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<style type="text/css">
+	.monster {
+	height: 138px;
+	width: 120px;
+	background-image: url({{mon.img.url}});
+	background-size: contain;
+	position: relative;
+	background-repeat: no-repeat;
+	bottom: -6px;
+	right: 0;
+  }
+	</style>
+</head>
+<body>
+		<div class="game-bartop">
+				<div class="outer-hp">
+					<div id="player-hp" class="hp">1000</div>
+					<div id="player-hp-bar" class="inner-hp"></div>
+				</div>
+
+				<h1>Fight!</h1>
+
+				<div class="outer-hp">
+					<div id="monster-hp" class="hp">1000</div>
+					<div id="monster-hp-bar" class="inner-hp"></div>
+				</div>
+			</div>
+		<div class="game-window">
+			<div class="player"></div>
+			<div class="monster"></div>
+			<div class="floor"></div>
+			<div class="player-dmg">player-dmg</div>
+			<div class="monster-dmg">monster-dmg</div>
+		</div>
+		<div class="game-bar">
+			<button class="btn-attack">Attack!</button>
+		</div>
+		<div class="overlay">
+			 <div class="you-win-modal">
+				<h1>YOU BEAT THE BOSS</h1>
+				<h4>XP+ 100</h4>
+				<h4>GOLD+ 100</h4>
+				<button class="btn-win">YES!</button>
+			</div>
+		</div>
+	
+		<script type="text/javascript" src="../../static/JS/scripts.js"></script>
+	</body>
+	</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <style type="text/css">
+      h1{
+        margin-left: 10px;
+      }
+      div{
+        padding: 10px;
+        text-align: center;
+      }
+      .table{
+        width: fit-content !important;
+        display: inline-block;
+        margin: auto;
+        border: 2px solid blue;
+      }
+      form div{
+        margin: 0px auto 0px auto;
+        width: 70%;
+      }
+     
+    </style> 
+  </head>
+  <body> 
+    {% load humanize %} 
+    <div class="jumbotron">
+      <h5 class="display-5">Welcome to the shop! {{request.session.first_name}}</h5>
+      <a href="/logout">logout</a> | 
+      <a href="/logged">Return</a>
+      <hr class="my-4">
+        <div class="card w-100" style="width: 18rem;">
+          <div class="card-body">
+            <h4 class="display-4">Shop</h4>
+            <table class="table table-dark">
+              <tr>
+                <th>Item</th>
+                <th>Items Purchased</th>
+              </tr>
+              {% for i in item %}
+              <tr>
+                <td scope="col">{{i.item}}</td>
+                {% if user in i.items_owned.all  %}
+                <td scope="col"> <a href=""> {{i.item}} </a></td>
+                {% endif %}
+                <td scope="col">
+                {% if user in i.items_owned.all  %}
+                  <form action="/sellitem" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="item" value="{{i.id}}">
+                    <button type="submit" class="btn btn-link">sell</button>
+                  </form>
+                  {% else %}
+                  <form action="/buyitem" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="item" value="{{i.id}}">
+                    <button type="submit" class="btn btn-link">Buy Item</button>
+                  </form>
+                {% endif %}
+                </td>
+              </tr> 
+              {% endfor %}
+            </table>          
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="card-deck">
+          {% for i in item %}
+          <div class="card">
+            <img class="card-img-top" src="{{i.img.url}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{i.item}}</h5>{{item.item}}
+            <p class="card-text"></p>
+          </div>
+          <div class="card-footer">
+            <p>Price: {{i.price}}</p>
+            {% if user in i.items_owned.all %}
+            <form action="/sellitem" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="item" value ="{{i.id}}">
+              <button type="submit">sell</button>
+            </form>
+            {% else %}
+            <form action="/buyitem" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="item" value ="{{i.id}}">
+              <button type="submit">Buy</button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+        </div>
+      </div>
+  </body>
+</html>
